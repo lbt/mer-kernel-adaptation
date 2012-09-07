@@ -1,0 +1,60 @@
+# See: http://wiki.merproject.org/wiki/Adaptation_Guide/Step_by_step 
+# for documentation of this file.
+
+Name: kernel-adaptation-sample
+# The text following "kernel-adaptation-" is put into the
+# %{kernel_target_hw} macro by the .spec file. Typically
+# you make an OBS package called kernel-adaptation-<devicecodename>
+
+Summary: Kernel Adaptation %{kernel_target_hw}
+Description: Kernel for %{kernel_target_hw}.
+
+# The Version: is used in paths and must match the version 
+# used in the src "make install" - it's also used for the
+# tarball name
+Version: 2.6.38.4
+Release: 1~git44415e7
+Group: Kernel/Linux Kernel
+License: GPLv2
+Configure: none
+Builder: none
+
+#URL: not required but useful to identify where the source can be found.
+RequiresPost:
+     - module-init-tools
+PkgConfigBR:
+# ncurses is useful if you chroot into the kernel build area and want
+#  "make menuconfig"
+     - "ncurses"
+
+# When available the kernel-check-mer package will be used to validate
+#the .config
+PkgBR:
+    - "u-boot-omap4panda-tools"
+    - "mer-kernel-check"
+
+Sources:
+    - kernel-v%{version}-src.tar.gz
+    - "%{name}.config"
+
+# Insert any Patches: section here
+
+Provides:
+    - "kernel = %{kernel_version}"
+ 
+Files:
+    - "/lib/modules/%{kernel_version}/*"
+    - "/boot/System.map-%{kernel_version}"
+    - "/boot/config-%{kernel_version}"
+ 
+SubPackages:
+    - Name: devel
+      Summary: Devel files for %{kernel_target_hw} kernel
+      Group: Development/System
+      Description: |
+          Devel for %{kernel_target_hw} kernel
+      Provides:
+          - "kernel-devel = %{kernel_version}"
+      Files:
+          - "/%{_prefix}/src/kernels/%{kernel_version}/*"
+          - "/%{_prefix}/src/kernels/%{kernel_version}/.config"
