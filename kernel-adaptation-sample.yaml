@@ -43,9 +43,9 @@ Provides:
     - "kernel = %{kernel_version}"
  
 Files:
-    - "/lib/modules/%{kernel_version}/*"
-    - "/boot/System.map-%{kernel_version}"
-    - "/boot/config-%{kernel_version}"
+    - "/lib/modules/%{kernel_version_build}/*"
+    - "/boot/System.map-%{kernel_version_build}"
+    - "/boot/config-%{kernel_version_build}"
  
 SubPackages:
     - Name: devel
@@ -56,5 +56,5 @@ SubPackages:
       Provides:
           - "kernel-devel = %{kernel_version}"
       Files:
-          - "/%{_prefix}/src/kernels/%{kernel_version}/*"
-          - "/%{_prefix}/src/kernels/%{kernel_version}/.config"
+          - "/%{_prefix}/src/kernels/%{kernel_version_build}/*"
+          - "/%{_prefix}/src/kernels/%{kernel_version_build}/.config"

@@ -6,12 +6,10 @@
 Name:       kernel-adaptation-sample
 
 # >> macros
-# kernel_version_build is the kernel version with the unique build release
-%define kernel_version_build %{version}-%{release}
+# kernel_version_build is the kernel version with the unique build release and flavour, e.g., 2.6.36.2-4.1-device
+%define kernel_version_build %{version}-%{release}-%{kernel_target_hw}
 # kernel_devel_dir for includes/kconfig/makefiles and other devel- files
-%define kernel_devel_dir %{_prefix}/src/kernels/%{kernel_version}
-# kernel_version is the plain 'upstream' kernel version eg: 2.6.36.2
-%define kernel_version %{version}
+%define kernel_devel_dir %{_prefix}/src/kernels/%{kernel_version_build}
 # << macros
 
 Summary:    Kernel Adaptation %{kernel_target_hw}
@@ -113,10 +111,10 @@ rm -rf %{buildroot}
 
 # Modules
 # Consider : INSTALL_MOD_STRIP
-# set srctree and objtree here to make %{buildroot}/lib/modules/%{kernel_version}/{source,build}
-make INSTALL_MOD_PATH=%{buildroot} srctree=%{kernel_devel_dir} objtree=%{kernel_devel_dir} modules_install
-mkdir -p %{buildroot}/lib/modules/%{kernel_version}/
-touch %{buildroot}/lib/modules/%{kernel_version}/modules.dep
+# set srctree and objtree here to make %{buildroot}/lib/modules/%{kernel_version_build}/{source,build}
+make INSTALL_MOD_PATH=%{buildroot} modules_install
+mkdir -p %{buildroot}/lib/modules/%{kernel_version_build}/
+touch %{buildroot}/lib/modules/%{kernel_version_build}/modules.dep
 
 # /boot
 mkdir -p %{buildroot}/boot/
@@ -127,12 +125,12 @@ install -m 755 arch/%{kernel_arch}/boot/uImage %{buildroot}/boot/
 %endif
 
 %if 0%{?builds_vmlinuz}
-install -m 755 arch/%{kernel_arch}/boot/bzImage %{buildroot}/boot/vmlinuz-%{kernel_version}
+install -m 755 arch/%{kernel_arch}/boot/bzImage %{buildroot}/boot/vmlinuz-%{kernel_version_build}
 %endif
 
-install -m 755 .config %{buildroot}/boot/config-%{kernel_version}
+install -m 755 .config %{buildroot}/boot/config-%{kernel_version_build}
 install -m 755 System.map %{buildroot}/boot/
-install -m 755 System.map %{buildroot}/boot/System.map-%{kernel_version}
+install -m 755 System.map %{buildroot}/boot/System.map-%{kernel_version_build}
 
 # And save the headers/makefiles etc for building modules against
 #
@@ -205,16 +203,16 @@ cp %{buildroot}/%{kernel_devel_dir}/.config %{buildroot}/%{kernel_devel_dir}/inc
 
 %files
 %defattr(-,root,root,-)
-/lib/modules/%{kernel_version}/*
-/boot/System.map-%{kernel_version}
-/boot/config-%{kernel_version}
+/lib/modules/%{kernel_version_build}/*
+/boot/System.map-%{kernel_version_build}
+/boot/config-%{kernel_version_build}
 # >> files
 
 # do we need this? should it be versioned only for x86
 /boot/System.map
 
 %if 0%{?builds_vmlinuz}
-/boot/vmlinuz-%{kernel_version}
+/boot/vmlinuz-%{kernel_version_build}
 /boot/vmlinuz
 %endif
 
@@ -229,7 +227,7 @@ cp %{buildroot}/%{kernel_devel_dir}/.config %{buildroot}/%{kernel_devel_dir}/inc
 
 %files devel
 %defattr(-,root,root,-)
-/%{_prefix}/src/kernels/%{kernel_version}/*
-/%{_prefix}/src/kernels/%{kernel_version}/.config
+/%{_prefix}/src/kernels/%{kernel_version_build}/*
+/%{_prefix}/src/kernels/%{kernel_version_build}/.config
 # >> files devel
 # << files devel
