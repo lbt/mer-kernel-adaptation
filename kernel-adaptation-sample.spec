@@ -196,6 +196,8 @@ touch -r %{buildroot}/%{kernel_devel_dir}/.config %{buildroot}/%{kernel_devel_di
 # Copy .config to include/config/auto.conf so "make prepare" is unnecessary.
 cp %{buildroot}/%{kernel_devel_dir}/.config %{buildroot}/%{kernel_devel_dir}/include/config/auto.conf
 
+# mark modules executable so that strip-to-file can strip them
+find %{buildroot}/lib/modules/%{kernel_version_build} -name "*.ko" -type f -exec chmod u+x {} \;
 # << install pre
 
 # >> install post
