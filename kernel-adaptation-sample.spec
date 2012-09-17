@@ -23,7 +23,7 @@ Source100:  kernel-adaptation-sample.yaml
 Requires(post): module-init-tools
 BuildRequires:  pkgconfig(ncurses)
 BuildRequires:  u-boot-omap4panda-tools
-BuildRequires:  mer-kernel-check
+BuildRequires:  mer-kernel-checks
 Provides:   kernel = %{kernel_version}
 
 %description

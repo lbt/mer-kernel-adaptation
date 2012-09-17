@@ -31,7 +31,7 @@ PkgConfigBR:
 #the .config
 PkgBR:
     - "u-boot-omap4panda-tools"
-    - "mer-kernel-check"
+    - "mer-kernel-checks"
 
 Sources:
     - kernel-v%{version}-src.tar.gz
