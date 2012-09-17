@@ -72,6 +72,10 @@ rpm.define("kernel_target_hw " ..  capture)
 end
 }
 cp %{SOURCE1} ./.config
+
+# make sure EXTRAVERSION says what we want it to say
+perl -p -i -e "s/^EXTRAVERSION.*/EXTRAVERSION = -%{release}-%{kernel_target_hw}/" Makefile
+
 # Verify this spec is using the latest template version
 /usr/bin/mer_verify_kernel_spec 1 --fatal-if-old
 
