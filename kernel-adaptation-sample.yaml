@@ -20,8 +20,11 @@ Configure: none
 Builder: none
 
 #URL: not required but useful to identify where the source can be found.
+
 RequiresPost:
-     - module-init-tools
+     # We are running depmod in the post thus this requirement
+     - kmod >= 9
+
 PkgConfigBR:
 # ncurses is useful if you chroot into the kernel build area and want
 #  "make menuconfig"
@@ -32,6 +35,9 @@ PkgConfigBR:
 PkgBR:
     - "u-boot-omap4panda-tools"
     - "mer-kernel-checks"
+    # depmod is used when building the kernel by toplevel Makefile 
+    # that calls scripts/depmod.sh
+    - kmod >= 9
 
 Sources:
     - kernel-v%{version}-src.tar.gz
