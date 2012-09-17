@@ -161,11 +161,11 @@ rm -rf %{buildroot}/%{kernel_devel_dir}/include
 # Copy all scripts
 cp .config %{buildroot}/%{kernel_devel_dir}
 cp -a scripts %{buildroot}/%{kernel_devel_dir}
-if [ -d arch/%{karch}/scripts ]; then
+if [ -d arch/%{kernel_arch}/scripts ]; then
 cp -a arch/%{kernel_arch}/scripts %{buildroot}/%{kernel_devel_dir}/arch/%{kernel_arch}
 fi
 # FIXME - what's this trying to do ... if *lds expands to multiple files the -f test will fail.
-if [ -f arch/%{karch}/*lds ]; then
+if [ -f arch/%{kernel_arch}/*lds ]; then
 cp -a arch/%{kernel_arch}/*lds %{buildroot}/%{kernel_devel_dir}/arch/%{kernel_arch}/
 fi
 # Clean any .o files from the 'scripts'
@@ -175,7 +175,7 @@ find %{buildroot}/%{kernel_devel_dir}/scripts/ -name \*.o -print0 | xargs -0 rm 
 cp -a --parents arch/%{kernel_arch}/include %{buildroot}/%{kernel_devel_dir}
 
 # arm has include files under plat- and mach- areas (x86/mips don't)
-%if "%{?karch}" == "arm"
+%if "%{?kernel_arch}" == "arm"
 cp -a --parents arch/%{kernel_arch}/mach-*/include %{buildroot}/%{kernel_devel_dir}
 cp -a --parents arch/%{kernel_arch}/plat-*/include %{buildroot}/%{kernel_devel_dir}
 %endif
