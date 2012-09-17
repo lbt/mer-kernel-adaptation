@@ -41,6 +41,9 @@ Sources:
 
 Provides:
     - "kernel = %{kernel_version}"
+
+RunFdupes:
+    - "/%{_prefix}/src/kernels/%{kernel_version_build}/"
  
 Files:
     - "/lib/modules/%{kernel_version_build}/*"

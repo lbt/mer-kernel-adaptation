@@ -24,6 +24,7 @@ Requires(post): module-init-tools
 BuildRequires:  pkgconfig(ncurses)
 BuildRequires:  u-boot-omap4panda-tools
 BuildRequires:  mer-kernel-checks
+BuildRequires:  fdupes
 Provides:   kernel = %{kernel_version}
 
 %description
@@ -199,6 +200,7 @@ cp %{buildroot}/%{kernel_devel_dir}/.config %{buildroot}/%{kernel_devel_dir}/inc
 # >> install post
 # << install post
 
+%fdupes  %{buildroot}//%{_prefix}/src/kernels/%{kernel_version_build}/
 
 %post
 # >> post
