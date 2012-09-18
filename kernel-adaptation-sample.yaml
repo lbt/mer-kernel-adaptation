@@ -12,8 +12,8 @@ Description: Kernel for %{kernel_target_hw}.
 # The Version: is used in paths and must match the version 
 # used in the src "make install" - it's also used for the
 # tarball name
-Version: 2.6.38.4
-Release: 1~git44415e7
+Version: 3.5.3
+Release: 1
 Group: Kernel/Linux Kernel
 License: GPLv2
 Configure: none

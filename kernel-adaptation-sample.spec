@@ -13,8 +13,8 @@ Name:       kernel-adaptation-sample
 # << macros
 
 Summary:    Kernel Adaptation %{kernel_target_hw}
-Version:    2.6.38.4
-Release:    1~git44415e7
+Version:    3.5.3
+Release:    1
 Group:      Kernel/Linux Kernel
 License:    GPLv2
 Source0:    kernel-v%{version}-src.tar.gz
