@@ -33,7 +33,9 @@ PkgConfigBR:
 # When available the kernel-check-mer package will be used to validate
 #the .config
 PkgBR:
-    - "u-boot-omap4panda-tools"
+    # In case your adaptation uses uImages for booting you need to include
+    # u-boot-tools package from your adaptation to kernel build.
+    # - "u-boot-sample-tools"
     - "mer-kernel-checks"
     # depmod is used when building the kernel by toplevel Makefile 
     # that calls scripts/depmod.sh

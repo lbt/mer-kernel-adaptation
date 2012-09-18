@@ -22,7 +22,6 @@ Source1:    %{name}.config
 Source100:  kernel-adaptation-sample.yaml
 Requires(post): kmod >= 9
 BuildRequires:  pkgconfig(ncurses)
-BuildRequires:  u-boot-omap4panda-tools
 BuildRequires:  mer-kernel-checks
 BuildRequires:  kmod >= 9
 BuildRequires:  fdupes
