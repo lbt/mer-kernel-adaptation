@@ -1,0 +1,44 @@
+Welcome to mer kernel template packaging. This is a template that is just one example
+how one can package kernel for Mer, you can use with modification or do your own if 
+you want. In this README file there are some usual steps that are used to create the
+kernel packaging.
+
+** Create kernel package to the obs e.g.
+$ osc meta pkg home:<user> kernel-adaptation-<myAdaptation> -e
+
+** Copy this sample kernel there and rename files from kernel-adaptation-sample to
+kernel-adaptation-<myAdaptation>
+
+** Get kernel source tarball and include it to the packaging directory.
+
+** Change .yaml file to include proper adaptation name, i.e., replace sample
+with <myAdaptation>. Change kernel version to match your kernel version in tarball
+
+** Change the macros to match your own adaptation needs
+
+** Copy config file on top of the kernel-adaptation-<myAdaptation>.config
+Verify that all the mer kernel options are enabled as they should, with
+$ mer_verify_kernel_config < kernel-adaptation-<myAdaptation>.config
+
+It is also recommended to do make oldconfig so that all the options are shown in the
+config file properly. This can be done for example by adding 
+
+"
+make oldconfig
+exit 1
+"
+
+after the "cp %{SOURCE1} ./.config" line in .spec file and build the kernel once and 
+copy the resulting .config file from the buildroot on top of the config file in
+the obs packaging. After this is done remove the make oldconfig from .spec and build for 
+real as shown below. 
+
+** Compile the kernel and test that it packages ok:
+$ osc build --no-verify
+
+** Add entry to .changes file that describes what was done.
+
+** Submit the files to OBS
+$ osc ar
+$ osc ci -m "My intial kernel packaging"
+

@@ -12,16 +12,25 @@ Description: Kernel for %{kernel_target_hw}.
 # The Version: is used in paths and must match the version 
 # used in the src "make install" - it's also used for the
 # tarball name
-Version: 2.6.38.4
-Release: 1~git44415e7
+Version: 3.5.3
+Release: 1
 Group: Kernel/Linux Kernel
 License: GPLv2
 Configure: none
 Builder: none
 
+Macros:
+     # Set these values based on the features in your own adaptation.
+     - #builds_vmlinuz;1
+     - #builds_uImage;1
+     - #builds_firmware;1
+
 #URL: not required but useful to identify where the source can be found.
+
 RequiresPost:
-     - module-init-tools
+     # We are running depmod in the post thus this requirement
+     - kmod >= 9
+
 PkgConfigBR:
 # ncurses is useful if you chroot into the kernel build area and want
 #  "make menuconfig"
@@ -30,8 +39,15 @@ PkgConfigBR:
 # When available the kernel-check-mer package will be used to validate
 #the .config
 PkgBR:
-    - "u-boot-omap4panda-tools"
-    - "mer-kernel-check"
+    # In case your adaptation uses uImages for booting you need to include
+    # u-boot-tools package from your adaptation to kernel build.
+    # - "u-boot-sample-tools"
+    - "mer-kernel-checks"
+    # depmod is used when building the kernel by toplevel Makefile 
+    # that calls scripts/depmod.sh
+    - kmod >= 9
+    # Perl is used to modify EXTRAVERSION in kernel config
+    - perl 
 
 Sources:
     - kernel-v%{version}-src.tar.gz
@@ -41,11 +57,14 @@ Sources:
 
 Provides:
     - "kernel = %{kernel_version}"
+
+RunFdupes:
+    - "/%{_prefix}/src/kernels/%{kernel_version_build}/"
  
 Files:
-    - "/lib/modules/%{kernel_version}/*"
-    - "/boot/System.map-%{kernel_version}"
-    - "/boot/config-%{kernel_version}"
+    - "/lib/modules/%{kernel_version_build}/*"
+    - "/boot/System.map-%{kernel_version_build}"
+    - "/boot/config-%{kernel_version_build}"
  
 SubPackages:
     - Name: devel
@@ -56,5 +75,5 @@ SubPackages:
       Provides:
           - "kernel-devel = %{kernel_version}"
       Files:
-          - "/%{_prefix}/src/kernels/%{kernel_version}/*"
-          - "/%{_prefix}/src/kernels/%{kernel_version}/.config"
+          - "/%{_prefix}/src/kernels/%{kernel_version_build}/*"
+          - "/%{_prefix}/src/kernels/%{kernel_version_build}/.config"
