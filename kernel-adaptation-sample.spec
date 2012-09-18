@@ -52,11 +52,8 @@ Devel for %{kernel_target_hw} kernel
 %{lua:
 arch = rpm.expand("%{_arch}")
 if arch == "arm" or arch == "mips" then
-rpm.define("builds_uImage 1")
 rpm.define("kernel_arch " .. arch)
 else
-rpm.define("builds_firmware 1")
-rpm.define("builds_vmlinuz 1")
 rpm.define("kernel_arch x86")
 end
 

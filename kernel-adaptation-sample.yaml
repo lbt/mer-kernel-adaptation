@@ -19,6 +19,12 @@ License: GPLv2
 Configure: none
 Builder: none
 
+Macros:
+     # Set these values based on the features in your own adaptation.
+     - #builds_vmlinuz;1
+     - #builds_uImage;1
+     - #builds_firmware;1
+
 #URL: not required but useful to identify where the source can be found.
 
 RequiresPost:
