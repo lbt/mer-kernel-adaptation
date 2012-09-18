@@ -24,6 +24,7 @@ Requires(post): kmod >= 9
 BuildRequires:  pkgconfig(ncurses)
 BuildRequires:  mer-kernel-checks
 BuildRequires:  kmod >= 9
+BuildRequires:  perl
 BuildRequires:  fdupes
 Provides:   kernel = %{kernel_version}
 

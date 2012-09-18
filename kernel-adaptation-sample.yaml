@@ -46,6 +46,8 @@ PkgBR:
     # depmod is used when building the kernel by toplevel Makefile 
     # that calls scripts/depmod.sh
     - kmod >= 9
+    # Perl is used to modify EXTRAVERSION in kernel config
+    - perl 
 
 Sources:
     - kernel-v%{version}-src.tar.gz
