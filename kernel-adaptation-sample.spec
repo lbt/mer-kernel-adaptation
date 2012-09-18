@@ -203,6 +203,9 @@ find %{buildroot}/lib/modules/%{kernel_version_build} -name "*.ko" -type f -exec
 
 %post
 # >> post
+# do we really need to call depmod in post? Isn't it called when
+# building kernel already if the depmod binary is available during
+# build time?
 /sbin/depmod -a
 # << post
 
